@@ -25,6 +25,7 @@ img{max-width:100%}
   --f-body:"Figtree",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   --f-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
   --sheet-l:30%;
+  --c-home:#f4a259; --c-search:#4fd1c5; --c-lib:#a78bfa; --c-queue:#ff7aa2;
   color-scheme:dark;
 }
 @media (prefers-color-scheme: light){
@@ -32,14 +33,14 @@ img{max-width:100%}
     --bg:#edf3f2; --surface:#ffffff; --surface-2:#dfe9e9; --line:#cbdada;
     --fg:#0f222b; --muted:#53707b; --accent:#c25e17; --accent-ink:#fff8f0;
     --accent-soft:rgba(194,94,23,.11); --like:#d42c4c; --scrim:rgba(15,34,43,.35);
-    --sheet-l:82%; color-scheme:light;
+    --sheet-l:82%; --c-home:#c25e17; --c-search:#0b857c; --c-lib:#6a46d4; --c-queue:#cf2f66; color-scheme:light;
   }
 }
 :root[data-theme="light"]{
   --bg:#edf3f2; --surface:#ffffff; --surface-2:#dfe9e9; --line:#cbdada;
   --fg:#0f222b; --muted:#53707b; --accent:#c25e17; --accent-ink:#fff8f0;
   --accent-soft:rgba(194,94,23,.11); --like:#d42c4c; --scrim:rgba(15,34,43,.35);
-  --sheet-l:82%; color-scheme:light;
+  --sheet-l:82%; --c-home:#c25e17; --c-search:#0b857c; --c-lib:#6a46d4; --c-queue:#cf2f66; color-scheme:light;
 }
 
 html,body{height:100%}
@@ -194,30 +195,13 @@ h2{font-size:22px;font-weight:700}
 .rpt b{position:absolute;top:5px;right:4px;font-size:9px;font-family:var(--f-mono);color:var(--accent)}
 .mini-ctrl,.mini-prog{display:none}
 
-/* Rotary section wheel (phones) */
-@property --a{syntax:'<angle>';inherits:true;initial-value:0deg}
-.wheelnav{display:none}
-.drum-win{height:32px;width:200px;max-width:100%;perspective:260px;
-  -webkit-mask:linear-gradient(transparent,#000 28%,#000 72%,transparent);mask:linear-gradient(transparent,#000 28%,#000 72%,transparent)}
-.drum{position:relative;height:100%;transform-style:preserve-3d;transform:translateZ(-16px) rotateX(0deg);transition:transform .45s cubic-bezier(.25,1.3,.4,1)}
-.face{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:8px;backface-visibility:hidden;-webkit-backface-visibility:hidden;
-  font-family:var(--f-display);font-weight:700;font-size:17px;letter-spacing:-.01em;color:var(--fg)}
-.face .ic{color:var(--accent);width:18px;height:18px}
-.wheel{position:relative;width:78px;height:78px;border-radius:50%;touch-action:none;cursor:grab;-webkit-tap-highlight-color:transparent}
-.wheel:active{cursor:grabbing}
-.dial{position:absolute;inset:0;border-radius:50%;--a:0deg;transform:rotate(var(--a));
-  background:radial-gradient(circle closest-side,var(--surface-2) 85%,transparent 86%),repeating-conic-gradient(var(--line) 0 5deg,var(--surface) 5deg 12deg);
-  box-shadow:inset 0 2px 5px rgba(0,0,0,.3),0 8px 18px -8px rgba(0,0,0,.55);
-  transition:--a .45s cubic-bezier(.25,1.3,.4,1)}
-.dial.dragging,.drum.dragging{transition:none}
-.opt{position:absolute;left:50%;top:50%;width:16px;height:16px;margin:-8px 0 0 -8px;color:var(--muted);
-  transform:rotate(var(--x)) translateY(-23px) rotate(calc(-1 * var(--x) - var(--a)));transition:color .2s}
-.opt .ic{width:16px;height:16px;display:block}
-.opt.sel{color:var(--accent)}
-.notch{position:absolute;top:-6px;left:50%;width:10px;height:7px;margin-left:-5px;z-index:2;background:var(--accent);clip-path:polygon(50% 100%,0 0,100% 0)}
-.hub{position:absolute;inset:0;margin:auto;width:26px;height:26px;border-radius:50%;z-index:1;
-  background:radial-gradient(circle at 35% 30%,color-mix(in srgb,var(--accent) 60%,#fff),var(--accent) 70%);box-shadow:0 2px 6px rgba(0,0,0,.35)}
-.hub:active{transform:scale(.92)}
+/* Bottom tabs (phones): each section has its own colour */
+.tabs{display:none}
+.tab{--c:var(--accent)}
+.tab[data-go="home"]{--c:var(--c-home)}
+.tab[data-go="search"]{--c:var(--c-search)}
+.tab[data-go="library"]{--c:var(--c-lib)}
+.tab[data-go="queue"]{--c:var(--c-queue)}
 
 /* Now playing sheet */
 .sheet{position:fixed;inset:0;z-index:20;overflow-y:auto;
@@ -285,9 +269,15 @@ h2{font-size:22px;font-weight:700}
   .mini-ctrl .ibtn{color:var(--fg)}
   .mini-prog{display:block;position:absolute;left:10px;right:10px;bottom:3px;height:2px;border-radius:1px;background:var(--surface-2);overflow:hidden}
   .mini-prog i{display:block;height:100%;background:var(--accent);width:0}
-  .wheelnav{display:flex;flex-direction:column;align-items:center;gap:6px;padding-block:6px 8px;user-select:none;-webkit-user-select:none;
-    padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-  .toast{bottom:calc(190px + env(safe-area-inset-bottom,0px))}
+  .tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding-block:6px 6px;
+    padding-left:max(8px,env(safe-area-inset-left,0px));padding-right:max(8px,env(safe-area-inset-right,0px))}
+  .tab{display:flex;flex-direction:column;align-items:center;gap:4px;padding:2px 0;font-size:11px;font-weight:600;color:var(--muted);-webkit-tap-highlight-color:transparent}
+  .tab .tab-ic{display:grid;place-items:center;width:52px;height:30px;border-radius:999px;color:var(--c);opacity:.75;transition:background .2s,opacity .2s,transform .2s}
+  .tab.on{color:var(--c)}
+  .tab.on .tab-ic{opacity:1;background:color-mix(in srgb,var(--c) 22%,transparent)}
+  .tab.on .tab-ic .ic{stroke-width:2.3}
+  .tab:active .tab-ic{transform:scale(.92)}
+  .toast{bottom:calc(140px + env(safe-area-inset-bottom,0px))}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -337,14 +327,7 @@ h2{font-size:22px;font-weight:700}
     <div class="mini-prog"><i id="mini-bar"></i></div>
   </section>
 
-  <nav class="wheelnav" id="wheelnav" aria-label="Sections">
-    <div class="drum-win" aria-hidden="true"><div class="drum" id="drum"></div></div>
-    <div class="wheel" id="wheel" role="slider" tabindex="0" aria-label="Turn the wheel to switch section" aria-valuemin="0" aria-valuemax="3" aria-valuenow="0" aria-valuetext="Home">
-      <span class="notch"></span>
-      <div class="dial" id="dial"></div>
-      <button class="hub" id="hub" aria-label="Next section"></button>
-    </div>
-  </nav>
+  <nav class="tabs" id="tabs" aria-label="Sections"></nav>
 </div>
 
 <div class="sheet" id="sheet" hidden></div>
@@ -775,7 +758,7 @@ function go(route,reset){if(reset)S.hist=[];else S.hist.push(S.route);S.route=ro
 function chrome(){
   const n=S.route.name,items=[['home','Home','home'],['search','Search','search'],['library','Your Library','library'],['queue','Queue','queue']];
   $('#sidenav').innerHTML=items.slice(0,3).map(([k,l,i])=>`<button data-go="${k}" class="${n===k?'on':''}">${ico(i)}${l}</button>`).join('');
-  syncWheelToRoute();
+  $('#tabs').innerHTML=items.map(([k,l,i])=>`<button class="tab ${n===k?'on':''}" data-go="${k}" aria-current="${n===k?'page':'false'}"><span class="tab-ic">${ico(i)}</span>${k==='library'?'Library':l}</button>`).join('');
   $('#sidelist').innerHTML=[likedPl(),...S.playlists,...EDITORIAL].map(p=>`<button data-open="${p.liked?'liked':'pl:'+p.id}">${plCover(p,'',false)}<span>${esc(p.name)}</span></button>`).join('');
   $('#b-queue').classList.toggle('on',n==='queue');
 }
@@ -952,60 +935,6 @@ document.addEventListener('keydown',e=>{
   else if(e.key==='ArrowRight'&&e.shiftKey)next(false);
   else if(e.key==='ArrowLeft'&&e.shiftKey)prev();
 });
-
-/* ---------- Rotary section wheel ---------- */
-const NAV=[['home','Home','home'],['search','Search','search'],['library','Library','library'],['queue','Queue','queue']];
-let wAngle=0,wDrag=null,wLast=0;
-const wheel=$('#wheel'),dial=$('#dial'),drum=$('#drum');
-drum.innerHTML=NAV.map(([k,l,i],n)=>`<div class="face" style="transform:rotateX(${n*90}deg) translateZ(16px)">${ico(i)}${l}</div>`).join('');
-dial.innerHTML=NAV.map(([k,l,i],n)=>`<span class="opt" data-n="${n}" style="--x:${-n*90}deg">${ico(i)}</span>`).join('');
-const wSel=()=>((Math.round(wAngle/90)%4)+4)%4;
-function paintWheel(){
-  dial.style.setProperty('--a',wAngle+'deg');
-  drum.style.transform=`translateZ(-16px) rotateX(${-wAngle}deg)`;
-  const s=wSel();
-  dial.querySelectorAll('.opt').forEach(o=>o.classList.toggle('sel',+o.dataset.n===s));
-  wheel.setAttribute('aria-valuenow',s);wheel.setAttribute('aria-valuetext',NAV[s][1]);
-  if(s!==wLast){wLast=s;try{navigator.vibrate&&navigator.vibrate(8)}catch(e){}}
-}
-function setDragging(b){dial.classList.toggle('dragging',b);drum.classList.toggle('dragging',b)}
-function snapWheel(navigate){
-  wAngle=Math.round(wAngle/90)*90;setDragging(false);paintWheel();
-  if(navigate){const k=NAV[wSel()][0];if(S.route.name!==k||S.hist.length){closeSheet();go({name:k},true)}}
-}
-function turnTo(i){let diff=((i-wSel())%4+4)%4;if(diff===3)diff=-1;wAngle=Math.round(wAngle/90)*90+diff*90}
-function syncWheelToRoute(){
-  const i=NAV.findIndex(n=>n[0]===S.route.name);
-  if(i<0||wDrag||i===wSel())return;
-  turnTo(i);wLast=i;paintWheel();
-}
-const wAng=e=>{const r=wheel.getBoundingClientRect();return Math.atan2(e.clientY-(r.top+r.height/2),e.clientX-(r.left+r.width/2))*180/Math.PI};
-wheel.addEventListener('pointerdown',e=>{
-  if(e.target.closest('#hub'))return;
-  const o=e.target.closest('.opt');
-  wDrag={a:wAng(e),moved:0,opt:o?+o.dataset.n:null};
-  try{wheel.setPointerCapture(e.pointerId)}catch(err){}
-  setDragging(true);
-});
-wheel.addEventListener('pointermove',e=>{
-  if(!wDrag)return;
-  const a=wAng(e);let d=a-wDrag.a;if(d>180)d-=360;if(d<-180)d+=360;
-  wDrag.a=a;wDrag.moved+=Math.abs(d);wAngle+=d;paintWheel();
-});
-function wEnd(){
-  if(!wDrag)return;const {moved,opt}=wDrag;wDrag=null;
-  if(moved<4&&opt!=null){turnTo(opt);snapWheel(true);return}
-  snapWheel(moved>=4);
-}
-wheel.addEventListener('pointerup',wEnd);
-wheel.addEventListener('pointercancel',wEnd);
-$('#hub').addEventListener('click',()=>{wAngle=Math.round(wAngle/90)*90+90;snapWheel(true)});
-wheel.addEventListener('keydown',e=>{
-  if(e.target!==wheel)return;
-  if(e.key==='ArrowRight'||e.key==='ArrowUp'){e.preventDefault();e.stopPropagation();wAngle=Math.round(wAngle/90)*90+90;snapWheel(true)}
-  else if(e.key==='ArrowLeft'||e.key==='ArrowDown'){e.preventDefault();e.stopPropagation();wAngle=Math.round(wAngle/90)*90-90;snapWheel(true)}
-});
-paintWheel();
 
 /* ---------- Boot ---------- */
 render();updatePlayer();

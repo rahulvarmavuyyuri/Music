@@ -11,7 +11,7 @@ Every song is composed live with the Web Audio API, so there are no audio files 
 - Your own playlists: create, add songs, remove songs, delete
 - Play/pause, next/previous, seek, shuffle, repeat (all or one), volume
 - Full-screen Now Playing view with a live audio visualizer, tempo and key
-- On phones, a rotary wheel replaces the bottom tab bar: turn it to switch sections while the label rolls like a 3D drum
+- On phones, a bottom tab bar with a colour for each section: Home, Search, Library and Queue
 
 Likes and playlists are saved in your browser's local storage.
 
