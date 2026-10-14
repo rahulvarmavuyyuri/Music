@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Driftwave Player</title>
+<title>Beatzyr Player</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -295,7 +295,7 @@ h2{font-size:22px;font-weight:700}
 <body>
 <div class="app">
   <aside class="side" aria-label="Library">
-    <div class="brand"><span class="brand-mark"></span>Driftwave</div>
+    <div class="brand"><span class="brand-mark"></span>Beatzyr</div>
     <nav class="nav" id="sidenav"></nav>
     <div class="side-label">Your playlists <button data-act="newpl" aria-label="New playlist" title="New playlist"></button></div>
     <div class="side-list" id="sidelist"></div>
@@ -308,7 +308,7 @@ h2{font-size:22px;font-weight:700}
     <div class="np">
       <button class="np-open" data-act="sheet" aria-label="Open now playing">
         <div class="cover" id="np-cover"></div>
-        <div class="meta"><b id="np-title">Pick something to play</b><span id="np-artist">Driftwave</span></div>
+        <div class="meta"><b id="np-title">Pick something to play</b><span id="np-artist">Beatzyr</span></div>
       </button>
       <button class="ibtn like-np" id="np-like" aria-label="Like"></button>
     </div>
@@ -425,7 +425,7 @@ const EDITORIAL=[
   {id:'p3',name:'Night Drive',desc:'Synth arpeggios for empty highways after midnight.',hue:305,ids:[...TRACKS.filter(t=>t.style==='synthwave').map(t=>t.id),byTitle('Last Train Home')]},
   {id:'p4',name:'Kitchen Disco',desc:'House grooves that make the dishes go faster.',hue:22,ids:[...TRACKS.filter(t=>t.style==='house').map(t=>t.id),byTitle('Chrome Sunset')]},
   {id:'p5',name:'Pixel Garden',desc:'Bright chiptune melodies from a game that never existed.',hue:110,ids:TRACKS.filter(t=>t.style==='chiptune').map(t=>t.id)},
-  {id:'p6',name:'Daily Mix',desc:'A bit of everything on Driftwave, refreshed for today.',hue:40,ids:(()=>{const r=rng(hash(new Date().toDateString()));return TRACKS.map(t=>[r(),t.id]).sort((a,b)=>a[0]-b[0]).slice(0,10).map(x=>x[1])})()}
+  {id:'p6',name:'Daily Mix',desc:'A bit of everything on Beatzyr, refreshed for today.',hue:40,ids:(()=>{const r=rng(hash(new Date().toDateString()));return TRACKS.map(t=>[r(),t.id]).sort((a,b)=>a[0]-b[0]).slice(0,10).map(x=>x[1])})()}
 ];
 
 /* ---------- State ---------- */
@@ -685,7 +685,7 @@ function viewHome(){
   const recent=S.recent.length?S.recent:STARTER;
   return `<h1 class="greet">${greet}</h1>
   <div class="quick">${quick.map(p=>`<button class="qtile" data-open="${p.liked?'liked':'pl:'+p.id}">${plCover(p,'',false)}<span>${esc(p.name)}</span></button>`).join('')}</div>
-  <section class="sec"><div class="sec-head"><h2>Made for you</h2><small>Curated by Driftwave</small></div>
+  <section class="sec"><div class="sec-head"><h2>Made for you</h2><small>Curated by Beatzyr</small></div>
     <div class="shelf">${EDITORIAL.map(p=>`<button class="card" data-open="pl:${p.id}">${plCover(p)}<b>${esc(p.name)}</b><small>${esc(p.desc)}</small></button>`).join('')}</div></section>
   <section class="sec"><div class="sec-head"><h2>${S.recent.length?'Recently played':'Start here'}</h2></div>
     <div class="list">${recent.slice(0,5).map((id,i)=>trackRow(T[id],i,S.recent.length?'recent':'starter',false)).join('')}</div></section>
@@ -722,7 +722,7 @@ function viewLibrary(){
     ${S.playlists.map(p=>`<button class="card" data-open="pl:${p.id}">${plCover(p)}<b>${esc(p.name)}</b><small>Your playlist · ${p.ids.length} songs</small></button>`).join('')}
     <button class="card newpl" data-act="newpl"><div class="cover">${ico('plus')}</div><b>Create playlist</b><small>Name it, then add songs</small></button>
   </div></section>
-  <section class="sec"><h2>Saved from Driftwave</h2><div class="lib-grid">${EDITORIAL.map(p=>`<button class="card" data-open="pl:${p.id}">${plCover(p)}<b>${esc(p.name)}</b><small>${p.ids.length} songs</small></button>`).join('')}</div></section>
+  <section class="sec"><h2>Saved from Beatzyr</h2><div class="lib-grid">${EDITORIAL.map(p=>`<button class="card" data-open="pl:${p.id}">${plCover(p)}<b>${esc(p.name)}</b><small>${p.ids.length} songs</small></button>`).join('')}</div></section>
   <section class="sec"><h2>Artists</h2><div class="lib-grid">${ARTISTS.map(a=>`<button class="card artist" data-open="artist:${a.id}">${artistCover(a)}<b>${esc(a.name)}</b><small>${STYLES[a.style].label}</small></button>`).join('')}</div></section>`;
 }
 function viewQueue(){
@@ -739,7 +739,7 @@ function viewDetail(key){
   const {ids}=ctxInfo(key);let eyebrow,title,desc,cov,user=false;
   if(k==='liked'){eyebrow='Playlist';title='Liked Songs';desc='Tap the heart on any song to save it here.';cov=plCover(likedPl())}
   else if(k==='pl'){const p=EDITORIAL.find(p=>p.id===id)||userPl(id);if(!p)return viewHome();user=!!userPl(id);
-    eyebrow=user?'Your playlist':'Driftwave playlist';title=p.name;desc=p.desc||'Add songs with the + button on any track.';cov=plCover(p)}
+    eyebrow=user?'Your playlist':'Beatzyr playlist';title=p.name;desc=p.desc||'Add songs with the + button on any track.';cov=plCover(p)}
   else if(k==='artist'){const a=A[id];eyebrow='Artist';title=a.name;desc=`${STYLES[a.style].label}. ${STYLES[a.style].blurb}.`;cov=artistCover(a)}
   else if(k==='genre'){const s=STYLES[id];eyebrow='Genre';title=s.label;desc=`${s.blurb}. Usually ${s.bpm[0]}–${s.bpm[1]} BPM.`;cov=`<div class="cover s-${id}" style="${coverStyle(s.hue,hash(id))}"><span class="cover-label">${s.label}</span></div>`}
   const total=ids.reduce((a,x)=>a+T[x].dur,0),active=S.ctxKey===key&&P.playing;
@@ -795,7 +795,7 @@ function updatePlayer(){
     document.documentElement.style.setProperty('--hue',t.hue);
     const liked=S.liked.has(t.id);
     ['#np-like','#mini-like'].forEach(s=>{const b=$(s);b.innerHTML=ico('heart');b.className='ibtn '+(s==='#np-like'?'like-np ':'')+(liked?'liked':'');b.dataset.like=t.id;b.setAttribute('aria-label',liked?'Unlike':'Like')});
-    document.title=(P.playing?'▶ ':'')+t.title+' · Driftwave';
+    document.title=(P.playing?'▶ ':'')+t.title+' · Beatzyr';
   }else{
     ['#np-like','#mini-like'].forEach(s=>{$(s).innerHTML=ico('heart');$(s).disabled=true});
   }
@@ -810,7 +810,7 @@ function renderSheet(){
   const liked=S.liked.has(t.id);
   sh.innerHTML=`<div class="sheet-in">
     <div class="sheet-top"><button class="ibtn" data-act="sheet-close" aria-label="Close">${ico('down')}</button>
-      <p><span>Playing from</span><b>${esc(S.ctxLabel||'Driftwave')}</b></p>
+      <p><span>Playing from</span><b>${esc(S.ctxLabel||'Beatzyr')}</b></p>
       <button class="ibtn" data-act="sheet-queue" aria-label="Queue">${ico('queue')}</button></div>
     ${trackCover(t,'big')}
     <canvas id="viz" aria-hidden="true"></canvas>
@@ -895,7 +895,7 @@ function dlgAddTo(id){
 }
 function dlgDelete(id){
   const p=userPl(id);
-  openDlg(`<h2>Delete “${esc(p.name)}”?</h2><p>This removes the playlist from your library. The songs stay on Driftwave.</p>
+  openDlg(`<h2>Delete “${esc(p.name)}”?</h2><p>This removes the playlist from your library. The songs stay on Beatzyr.</p>
   <div class="dlg-actions"><button class="pill" data-act="dlg-close">Keep it</button><button class="pill primary" data-act="delpl-yes" data-id="${id}">Delete</button></div>`);
 }
 document.addEventListener('submit',e=>{

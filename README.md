@@ -1,4 +1,4 @@
-# Driftwave
+# Beatzyr
 
 A Spotify-style music player prototype that runs entirely in the browser as a single `index.html` file.
 
