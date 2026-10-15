@@ -20,7 +20,7 @@ Likes, playlists and uploaded songs are saved in your browser.
 
 ## Beatz Originals
 
-The `songs` folder ships with nine original songs, including four techno tracks, made for this app. They are public domain (CC0), so anyone can play, share or reuse them. See `songs/LICENSE.txt`.
+The `songs` folder ships with twelve original songs, including four techno and three vocal techno tracks, made for this app. They are public domain (CC0), so anyone can play, share or reuse them. See `songs/LICENSE.txt`.
 
 | Song | Style | Length |
 | --- | --- | --- |
@@ -33,6 +33,9 @@ The `songs` folder ships with nine original songs, including four techno tracks,
 | Warehouse 303 | Techno | 2:27 |
 | Deep Pulse | Techno | 2:15 |
 | Steel Monsoon | Techno | 2:23 |
+| Feel the Pulse | Vocal Techno | 2:05 |
+| Neon Hearts | Vocal Techno | 2:07 |
+| Machine Talk | Vocal Techno | 2:29 |
 
 ## Add your own songs
 

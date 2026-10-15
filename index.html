@@ -407,7 +407,7 @@ let REPO_TITLE='Songs folder',REPO_DESC='Audio files from the songs folder in yo
 function repoGroups(){const m={};REPO.forEach(t=>{const g=t.genre||'';(m[g]=m[g]||[]).push(t.id)});
   const big=Object.entries(m).filter(([g,ids])=>g&&ids.length>=2);
   const rest=REPO.filter(t=>!big.some(([g])=>g===t.genre)).map(t=>t.id);return{big,rest}}
-const GENRE_HUE={Techno:265};
+const GENRE_HUE={Techno:265,'Vocal Techno':320};
 const groupPl=g=>({id:'rg'+g,key:'rg:'+g,name:g,hue:GENRE_HUE[g]!=null?GENRE_HUE[g]:hash(g)%360,ids:REPO.filter(t=>t.genre===g).map(t=>t.id)});
 const repoPl=()=>({id:'repo',key:'repo',name:REPO_TITLE,hue:340,ids:REPO.map(t=>t.id)});
 const openKey=p=>p.key||(p.liked?'liked':'pl:'+p.id);

@@ -82,6 +82,36 @@
       "style": "chiptune",
       "hue": 355,
       "duration": 143.2
+    },
+    {
+      "file": "feel-the-pulse.mp3",
+      "title": "Feel the Pulse",
+      "artist": "Beatz Originals",
+      "genre": "Vocal Techno",
+      "style": "synthwave",
+      "hue": 330,
+      "duration": 125.9,
+      "lyrics": "Feel the pulse / Feel it rise / We are the night / We are alive"
+    },
+    {
+      "file": "neon-hearts.mp3",
+      "title": "Neon Hearts",
+      "artist": "Beatz Originals",
+      "genre": "Vocal Techno",
+      "style": "house",
+      "hue": 300,
+      "duration": 127.9,
+      "lyrics": "City lights are calling / Hearts in neon glow / Hold me in the rhythm / Never let me go"
+    },
+    {
+      "file": "machine-talk.mp3",
+      "title": "Machine Talk",
+      "artist": "Beatz Originals",
+      "genre": "Vocal Techno",
+      "style": "chiptune",
+      "hue": 15,
+      "duration": 149.5,
+      "lyrics": "System online / Enter the machine / Lose control / Let the bass take over"
     }
   ]
 }
