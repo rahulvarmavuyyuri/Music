@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Beatzyr Player</title>
+<title>Beatz Player</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -280,7 +280,7 @@ h2{font-size:22px;font-weight:700}
 <canvas id="bg" aria-hidden="true"></canvas>
 <div class="app">
   <aside class="side" aria-label="Library">
-    <div class="brand"><span class="brand-mark"></span>Beatzyr</div>
+    <div class="brand"><span class="brand-mark"></span>Beatz</div>
     <nav class="nav" id="sidenav"></nav>
     <div class="side-label">Your playlists <button data-act="newpl" aria-label="New playlist" title="New playlist"></button></div>
     <div class="side-list" id="sidelist"></div>
@@ -293,7 +293,7 @@ h2{font-size:22px;font-weight:700}
     <div class="np">
       <button class="np-open" data-act="sheet" aria-label="Open now playing">
         <div class="cover" id="np-cover"></div>
-        <div class="meta"><b id="np-title">Pick something to play</b><span id="np-artist">Beatzyr</span></div>
+        <div class="meta"><b id="np-title">Pick something to play</b><span id="np-artist">Beatz</span></div>
       </button>
       <button class="ibtn like-np" id="np-like" aria-label="Like"></button>
     </div>
@@ -403,7 +403,7 @@ const artistName=t=>t.artistName||(A[t.artist]?A[t.artist].name:'Unknown artist'
 const UPLOADS=[],REPO=[];
 const allTracks=()=>TRACKS.concat(REPO,UPLOADS);
 const upPl=()=>({id:'uploads',key:'uploads',name:'Uploaded songs',hue:160,ids:UPLOADS.map(t=>t.id)});
-let REPO_TITLE='Songs folder',REPO_DESC='Audio files from the songs folder in your Beatzyr repository.';
+let REPO_TITLE='Songs folder',REPO_DESC='Audio files from the songs folder in your Beatz repository.';
 const repoPl=()=>({id:'repo',key:'repo',name:REPO_TITLE,hue:340,ids:REPO.map(t=>t.id)});
 const openKey=p=>p.key||(p.liked?'liked':'pl:'+p.id);
 
@@ -413,7 +413,7 @@ const EDITORIAL=[
   {id:'p3',name:'Night Drive',desc:'Synth arpeggios for empty highways after midnight.',hue:305,ids:[...TRACKS.filter(t=>t.style==='synthwave').map(t=>t.id),byTitle('Last Train Home')]},
   {id:'p4',name:'Kitchen Disco',desc:'House grooves that make the dishes go faster.',hue:22,ids:[...TRACKS.filter(t=>t.style==='house').map(t=>t.id),byTitle('Chrome Sunset')]},
   {id:'p5',name:'Pixel Garden',desc:'Bright chiptune melodies from a game that never existed.',hue:110,ids:TRACKS.filter(t=>t.style==='chiptune').map(t=>t.id)},
-  {id:'p6',name:'Daily Mix',desc:'A bit of everything on Beatzyr, refreshed for today.',hue:40,ids:(()=>{const r=rng(hash(new Date().toDateString()));return TRACKS.map(t=>[r(),t.id]).sort((a,b)=>a[0]-b[0]).slice(0,10).map(x=>x[1])})()}
+  {id:'p6',name:'Daily Mix',desc:'A bit of everything on Beatz, refreshed for today.',hue:40,ids:(()=>{const r=rng(hash(new Date().toDateString()));return TRACKS.map(t=>[r(),t.id]).sort((a,b)=>a[0]-b[0]).slice(0,10).map(x=>x[1])})()}
 ];
 
 /* ---------- State ---------- */
@@ -700,7 +700,7 @@ function viewHome(){
   return `<h1 class="greet">${greet}</h1>
   <div class="quick">${quick.map(p=>`<button class="qtile" data-open="${openKey(p)}">${plCover(p,'',false)}<span>${esc(p.name)}</span></button>`).join('')}</div>
   ${REPO.length?`<section class="sec"><div class="sec-head"><h2>${esc(REPO_TITLE)}</h2><small>Free to share</small></div><div class="list">${REPO.map((t,i)=>trackRow(t,i,'repo',false)).join('')}</div></section>`:''}
-  <section class="sec"><div class="sec-head"><h2>Made for you</h2><small>Curated by Beatzyr</small></div>
+  <section class="sec"><div class="sec-head"><h2>Made for you</h2><small>Curated by Beatz</small></div>
     <div class="shelf">${EDITORIAL.map(p=>`<button class="card" data-open="pl:${p.id}">${plCover(p)}<b>${esc(p.name)}</b><small>${esc(p.desc)}</small></button>`).join('')}</div></section>
   <section class="sec"><div class="sec-head"><h2>${rec.length?'Recently played':'Start here'}</h2></div>
     <div class="list">${recent.slice(0,5).map((id,i)=>trackRow(T[id],i,rec.length?'recent':'starter',false)).join('')}</div></section>
@@ -742,7 +742,7 @@ function viewLibrary(){
     ${S.playlists.map(p=>`<button class="card" data-open="pl:${p.id}">${plCover(p)}<b>${esc(p.name)}</b><small>Your playlist · ${p.ids.length} songs</small></button>`).join('')}
     <button class="card newpl" data-act="newpl"><div class="cover">${ico('plus')}</div><b>Create playlist</b><small>Name it, then add songs</small></button>
   </div></section>
-  <section class="sec"><h2>Saved from Beatzyr</h2><div class="lib-grid">${EDITORIAL.map(p=>`<button class="card" data-open="pl:${p.id}">${plCover(p)}<b>${esc(p.name)}</b><small>${p.ids.length} songs</small></button>`).join('')}</div></section>
+  <section class="sec"><h2>Saved from Beatz</h2><div class="lib-grid">${EDITORIAL.map(p=>`<button class="card" data-open="pl:${p.id}">${plCover(p)}<b>${esc(p.name)}</b><small>${p.ids.length} songs</small></button>`).join('')}</div></section>
   <section class="sec"><h2>Artists</h2><div class="lib-grid">${ARTISTS.map(a=>`<button class="card artist" data-open="artist:${a.id}">${artistCover(a)}<b>${esc(a.name)}</b><small>${STYLES[a.style].label}</small></button>`).join('')}</div></section>`;
 }
 function viewQueue(){
@@ -759,7 +759,7 @@ function viewDetail(key){
   const {ids}=ctxInfo(key);let eyebrow,title,desc,cov,user=false,removable=false,uploads=false;
   if(k==='liked'){eyebrow='Playlist';title='Liked Songs';desc='Tap the heart on any song to save it here.';cov=plCover(likedPl())}
   else if(k==='pl'){const p=EDITORIAL.find(p=>p.id===id)||userPl(id);if(!p)return viewHome();user=!!userPl(id);
-    eyebrow=user?'Your playlist':'Beatzyr playlist';title=p.name;desc=p.desc||'Add songs with the + button on any track.';cov=plCover(p)}
+    eyebrow=user?'Your playlist':'Beatz playlist';title=p.name;desc=p.desc||'Add songs with the + button on any track.';cov=plCover(p)}
   else if(k==='uploads'){eyebrow='Your music';title='Uploaded songs';desc='Songs you added from this device. They stay in this browser and are not uploaded anywhere.';cov=plCover(upPl());removable=uploads=true}
   else if(k==='repo'){eyebrow=REPO.length?'Free to share':'Your music';title=REPO_TITLE;desc=REPO_DESC;cov=plCover(repoPl())}
   else if(k==='artist'){const a=A[id];eyebrow='Artist';title=a.name;desc=`${STYLES[a.style].label}. ${STYLES[a.style].blurb}.`;cov=artistCover(a)}
@@ -818,7 +818,7 @@ function updatePlayer(){
     document.documentElement.style.setProperty('--hue',t.hue);
     const liked=S.liked.has(t.id);
     ['#np-like','#mini-like'].forEach(s=>{const b=$(s);b.innerHTML=ico('heart');b.className='ibtn '+(s==='#np-like'?'like-np ':'')+(liked?'liked':'');b.dataset.like=t.id;b.setAttribute('aria-label',liked?'Unlike':'Like')});
-    document.title=(P.playing?'▶ ':'')+t.title+' · Beatzyr';
+    document.title=(P.playing?'▶ ':'')+t.title+' · Beatz';
   }else{
     ['#np-like','#mini-like'].forEach(s=>{$(s).innerHTML=ico('heart');$(s).disabled=true});
   }
@@ -833,7 +833,7 @@ function renderSheet(){
   const liked=S.liked.has(t.id);
   sh.innerHTML=`<div class="sheet-in">
     <div class="sheet-top"><button class="ibtn" data-act="sheet-close" aria-label="Close">${ico('down')}</button>
-      <p><span>Playing from</span><b>${esc(S.ctxLabel||'Beatzyr')}</b></p>
+      <p><span>Playing from</span><b>${esc(S.ctxLabel||'Beatz')}</b></p>
       <button class="ibtn" data-act="sheet-queue" aria-label="Queue">${ico('queue')}</button></div>
     ${trackCover(t,'big')}
     <canvas id="viz" aria-hidden="true"></canvas>
@@ -919,7 +919,7 @@ function dlgAddTo(id){
 }
 function dlgDelete(id){
   const p=userPl(id);
-  openDlg(`<h2>Delete “${esc(p.name)}”?</h2><p>This removes the playlist from your library. The songs stay on Beatzyr.</p>
+  openDlg(`<h2>Delete “${esc(p.name)}”?</h2><p>This removes the playlist from your library. The songs stay on Beatz.</p>
   <div class="dlg-actions"><button class="pill" data-act="dlg-close">Keep it</button><button class="pill primary" data-act="delpl-yes" data-id="${id}">Delete</button></div>`);
 }
 document.addEventListener('submit',e=>{
@@ -1020,7 +1020,7 @@ async function addFiles(list){
 }
 async function deleteUpload(id){
   const t=T[id];if(!t)return;
-  if(P.track&&P.track.id===id){pauseAudio();if(P.audio){P.audio.removeAttribute('src');P.audio.dataset.id=''}P.track=null;$('#np-title').textContent='Pick something to play';$('#np-artist').textContent='Beatzyr'}
+  if(P.track&&P.track.id===id){pauseAudio();if(P.audio){P.audio.removeAttribute('src');P.audio.dataset.id=''}P.track=null;$('#np-title').textContent='Pick something to play';$('#np-artist').textContent='Beatz'}
   const cur=S.queue[S.qi];S.queue=S.queue.filter(x=>x!==id);S.order=S.order.filter(x=>x!==id);S.qi=S.queue.indexOf(cur);
   UPLOADS.splice(UPLOADS.indexOf(t),1);delete T[id];URL.revokeObjectURL(t.src);
   S.liked.delete(id);S.playlists.forEach(p=>p.ids=p.ids.filter(x=>x!==id));S.recent=S.recent.filter(x=>x!==id);save();

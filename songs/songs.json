@@ -1,11 +1,11 @@
 {
-  "title": "Beatzyr Originals",
-  "description": "Original songs made for Beatzyr. They are public domain (CC0), so anyone can play, share or reuse them.",
+  "title": "Beatz Originals",
+  "description": "Original songs made for Beatz. They are public domain (CC0), so anyone can play, share or reuse them.",
   "songs": [
     {
       "file": "rise-of-the-ember.mp3",
       "title": "Rise of the Ember",
-      "artist": "Beatzyr Originals",
+      "artist": "Beatz Originals",
       "genre": "Cinematic",
       "style": "ambient",
       "hue": 18,
@@ -14,7 +14,7 @@
     {
       "file": "monsoon-drive.mp3",
       "title": "Monsoon Drive",
-      "artist": "Beatzyr Originals",
+      "artist": "Beatz Originals",
       "genre": "Synthwave",
       "style": "synthwave",
       "hue": 290,
@@ -23,7 +23,7 @@
     {
       "file": "chai-and-chill.mp3",
       "title": "Chai & Chill",
-      "artist": "Beatzyr Originals",
+      "artist": "Beatz Originals",
       "genre": "Lo-fi",
       "style": "lofi",
       "hue": 30,
@@ -32,7 +32,7 @@
     {
       "file": "neon-bazaar.mp3",
       "title": "Neon Bazaar",
-      "artist": "Beatzyr Originals",
+      "artist": "Beatz Originals",
       "genre": "House",
       "style": "house",
       "hue": 320,
@@ -41,7 +41,7 @@
     {
       "file": "starlit-ghats.mp3",
       "title": "Starlit Ghats",
-      "artist": "Beatzyr Originals",
+      "artist": "Beatz Originals",
       "genre": "Ambient",
       "style": "ambient",
       "hue": 200,

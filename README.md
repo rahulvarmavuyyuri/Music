@@ -1,4 +1,4 @@
-# Beatzyr
+# Beatz
 
 A Spotify-style music player prototype that runs entirely in the browser as a single `index.html` file.
 
@@ -18,7 +18,7 @@ Every song is composed live with the Web Audio API, so there are no audio files 
 
 Likes, playlists and uploaded songs are saved in your browser.
 
-## Beatzyr Originals
+## Beatz Originals
 
 The `songs` folder ships with five original songs made for this app. They are public domain (CC0), so anyone can play, share or reuse them. See `songs/LICENSE.txt`.
 
@@ -36,9 +36,9 @@ Only add songs you made yourself or have a licence to use, such as royalty-free 
 
 ### Option 1: Add songs button (on your device)
 
-Open Library and tap **Add songs**, then pick MP3, M4A or WAV files. They play in Beatzyr and stay in that browser on that device; nothing is uploaded. On a computer you can also drag files onto the page.
+Open Library and tap **Add songs**, then pick MP3, M4A or WAV files. They play in Beatz and stay in that browser on that device; nothing is uploaded. On a computer you can also drag files onto the page.
 
-Name files `Artist - Title.mp3` and Beatzyr fills in the artist and title for you.
+Name files `Artist - Title.mp3` and Beatz fills in the artist and title for you.
 
 ### Option 2: The songs folder (for everyone who opens your site)
 
