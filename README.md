@@ -20,7 +20,7 @@ Likes, playlists and uploaded songs are saved in your browser.
 
 ## Beatz Originals
 
-The `songs` folder ships with five original songs made for this app. They are public domain (CC0), so anyone can play, share or reuse them. See `songs/LICENSE.txt`.
+The `songs` folder ships with nine original songs, including four techno tracks, made for this app. They are public domain (CC0), so anyone can play, share or reuse them. See `songs/LICENSE.txt`.
 
 | Song | Style | Length |
 | --- | --- | --- |
@@ -29,6 +29,10 @@ The `songs` folder ships with five original songs made for this app. They are pu
 | Chai & Chill | Lo-fi | 2:04 |
 | Neon Bazaar | House | 2:07 |
 | Starlit Ghats | Ambient | 2:04 |
+| Midnight Circuit | Techno | 2:17 |
+| Warehouse 303 | Techno | 2:27 |
+| Deep Pulse | Techno | 2:15 |
+| Steel Monsoon | Techno | 2:23 |
 
 ## Add your own songs
 

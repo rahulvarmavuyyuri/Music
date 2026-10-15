@@ -1,7 +1,8 @@
 Beatz Originals
 
 The audio files in this folder (rise-of-the-ember.mp3, monsoon-drive.mp3,
-chai-and-chill.mp3, neon-bazaar.mp3, starlit-ghats.mp3) were composed and
+chai-and-chill.mp3, neon-bazaar.mp3, starlit-ghats.mp3,
+midnight-circuit.mp3, warehouse-303.mp3, deep-pulse.mp3, steel-monsoon.mp3) were composed and
 synthesized from scratch for Beatz. They contain no samples or recordings
 from any other work.
 

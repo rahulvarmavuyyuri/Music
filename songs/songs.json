@@ -46,6 +46,42 @@
       "style": "ambient",
       "hue": 200,
       "duration": 124.0
+    },
+    {
+      "file": "midnight-circuit.mp3",
+      "title": "Midnight Circuit",
+      "artist": "Beatz Originals",
+      "genre": "Techno",
+      "style": "synthwave",
+      "hue": 200,
+      "duration": 137.0
+    },
+    {
+      "file": "warehouse-303.mp3",
+      "title": "Warehouse 303",
+      "artist": "Beatz Originals",
+      "genre": "Techno",
+      "style": "house",
+      "hue": 95,
+      "duration": 147.3
+    },
+    {
+      "file": "deep-pulse.mp3",
+      "title": "Deep Pulse",
+      "artist": "Beatz Originals",
+      "genre": "Techno",
+      "style": "ambient",
+      "hue": 250,
+      "duration": 135.7
+    },
+    {
+      "file": "steel-monsoon.mp3",
+      "title": "Steel Monsoon",
+      "artist": "Beatz Originals",
+      "genre": "Techno",
+      "style": "chiptune",
+      "hue": 355,
+      "duration": 143.2
     }
   ]
 }

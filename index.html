@@ -284,7 +284,7 @@ h2{font-size:22px;font-weight:700}
     <nav class="nav" id="sidenav"></nav>
     <div class="side-label">Your playlists <button data-act="newpl" aria-label="New playlist" title="New playlist"></button></div>
     <div class="side-list" id="sidelist"></div>
-    <p class="side-note">Prototype build. Every song is composed live in your browser, so nothing is licensed or downloaded.</p>
+    <p class="side-note">Every song on Beatz is original and free to share. Add your own from Library.</p>
   </aside>
 
   <main id="main"></main>
@@ -404,6 +404,11 @@ const UPLOADS=[],REPO=[];
 const allTracks=()=>TRACKS.concat(REPO,UPLOADS);
 const upPl=()=>({id:'uploads',key:'uploads',name:'Uploaded songs',hue:160,ids:UPLOADS.map(t=>t.id)});
 let REPO_TITLE='Songs folder',REPO_DESC='Audio files from the songs folder in your Beatz repository.';
+function repoGroups(){const m={};REPO.forEach(t=>{const g=t.genre||'';(m[g]=m[g]||[]).push(t.id)});
+  const big=Object.entries(m).filter(([g,ids])=>g&&ids.length>=2);
+  const rest=REPO.filter(t=>!big.some(([g])=>g===t.genre)).map(t=>t.id);return{big,rest}}
+const GENRE_HUE={Techno:265};
+const groupPl=g=>({id:'rg'+g,key:'rg:'+g,name:g,hue:GENRE_HUE[g]!=null?GENRE_HUE[g]:hash(g)%360,ids:REPO.filter(t=>t.genre===g).map(t=>t.id)});
 const repoPl=()=>({id:'repo',key:'repo',name:REPO_TITLE,hue:340,ids:REPO.map(t=>t.id)});
 const openKey=p=>p.key||(p.liked?'liked':'pl:'+p.id);
 
@@ -440,6 +445,8 @@ function ctxRaw(key){
   if(k==='recent')return{ids:S.recent.slice(),label:'Recently played'};
   if(k==='uploads')return{ids:UPLOADS.map(t=>t.id),label:'Uploaded songs'};
   if(k==='repo')return{ids:REPO.map(t=>t.id),label:REPO_TITLE};
+  if(k==='rg')return{ids:REPO.filter(t=>t.genre===id).map(t=>t.id),label:id};
+  if(k==='reporest')return{ids:repoGroups().rest,label:REPO_TITLE};
   if(k==='starter')return{ids:STARTER.slice(),label:'Start here'};
   if(k==='queue')return{ids:S.queue.slice(),label:S.ctxLabel};
   return{ids:[],label:''};
@@ -699,7 +706,9 @@ function viewHome(){
   const rec=S.recent.filter(id=>T[id]),recent=rec.length?rec:STARTER;
   return `<h1 class="greet">${greet}</h1>
   <div class="quick">${quick.map(p=>`<button class="qtile" data-open="${openKey(p)}">${plCover(p,'',false)}<span>${esc(p.name)}</span></button>`).join('')}</div>
-  ${REPO.length?`<section class="sec"><div class="sec-head"><h2>${esc(REPO_TITLE)}</h2><small>Free to share</small></div><div class="list">${REPO.map((t,i)=>trackRow(t,i,'repo',false)).join('')}</div></section>`:''}
+  ${(()=>{if(!REPO.length)return'';const G=repoGroups();
+    return G.big.map(([g,ids])=>`<section class="sec"><div class="sec-head"><h2>${esc(g)}</h2><button class="pill" data-open="rg:${esc(g)}">See all ${ids.length}</button></div><div class="list">${ids.map((id,i)=>trackRow(T[id],i,'rg:'+g,false)).join('')}</div></section>`).join('')+
+    (G.rest.length?`<section class="sec"><div class="sec-head"><h2>${esc(REPO_TITLE)}</h2><small>Free to share</small></div><div class="list">${G.rest.map((id,i)=>trackRow(T[id],i,'reporest',false)).join('')}</div></section>`:'')})()}
   <section class="sec"><div class="sec-head"><h2>Made for you</h2><small>Curated by Beatz</small></div>
     <div class="shelf">${EDITORIAL.map(p=>`<button class="card" data-open="pl:${p.id}">${plCover(p)}<b>${esc(p.name)}</b><small>${esc(p.desc)}</small></button>`).join('')}</div></section>
   <section class="sec"><div class="sec-head"><h2>${rec.length?'Recently played':'Start here'}</h2></div>
@@ -735,6 +744,7 @@ function viewLibrary(){
   <section class="sec"><h2>Your music</h2><div class="lib-grid">
     <button class="card" data-open="uploads">${plCover(upPl())}<b>Uploaded songs</b><small>${UPLOADS.length} on this device</small></button>
     ${REPO.length?`<button class="card" data-open="repo">${plCover(repoPl())}<b>${esc(REPO_TITLE)}</b><small>${REPO.length} songs · free to share</small></button>`:''}
+    ${repoGroups().big.map(([g,ids])=>`<button class="card" data-open="rg:${esc(g)}">${plCover(groupPl(g))}<b>${esc(g)}</b><small>${ids.length} songs · free to share</small></button>`).join('')}
     <button class="card newpl" data-act="upload"><div class="cover">${ico('upload')}</div><b>Add songs</b><small>MP3, M4A or WAV from your device</small></button>
   </div></section>
   <section class="sec"><h2>Playlists</h2><div class="lib-grid">
@@ -761,6 +771,7 @@ function viewDetail(key){
   else if(k==='pl'){const p=EDITORIAL.find(p=>p.id===id)||userPl(id);if(!p)return viewHome();user=!!userPl(id);
     eyebrow=user?'Your playlist':'Beatz playlist';title=p.name;desc=p.desc||'Add songs with the + button on any track.';cov=plCover(p)}
   else if(k==='uploads'){eyebrow='Your music';title='Uploaded songs';desc='Songs you added from this device. They stay in this browser and are not uploaded anywhere.';cov=plCover(upPl());removable=uploads=true}
+  else if(k==='rg'){eyebrow=REPO_TITLE;title=id;desc=`Original ${id.toLowerCase()} tracks made for Beatz. Free to play, share and reuse.`;cov=plCover(groupPl(id))}
   else if(k==='repo'){eyebrow=REPO.length?'Free to share':'Your music';title=REPO_TITLE;desc=REPO_DESC;cov=plCover(repoPl())}
   else if(k==='artist'){const a=A[id];eyebrow='Artist';title=a.name;desc=`${STYLES[a.style].label}. ${STYLES[a.style].blurb}.`;cov=artistCover(a)}
   else if(k==='genre'){const s=STYLES[id];eyebrow='Genre';title=s.label;desc=`${s.blurb}. Usually ${s.bpm[0]}–${s.bpm[1]} BPM.`;cov=`<div class="cover s-${id}" style="${coverStyle(s.hue,hash(id))}"><span class="cover-label">${s.label}</span></div>`}
