@@ -13,6 +13,7 @@ Every song is composed live with the Web Audio API, so there are no audio files 
 - Full-screen Now Playing view with a live audio visualizer, tempo and key
 - On phones, a bottom tab bar with a colour for each section: Home, Search, Library and Queue
 
+- Night-stage theme with a live background that moves to the music: spinning vinyl with sound bars, beat rings, flowing waves, floating notes and an equalizer skyline (turn it off in Library → Visuals)
 - Your own songs: add audio files from your device, or put MP3s in the `songs` folder
 
 Likes, playlists and uploaded songs are saved in your browser.
