@@ -18,6 +18,18 @@ Every song is composed live with the Web Audio API, so there are no audio files 
 
 Likes, playlists and uploaded songs are saved in your browser.
 
+## Beatzyr Originals
+
+The `songs` folder ships with five original songs made for this app. They are public domain (CC0), so anyone can play, share or reuse them. See `songs/LICENSE.txt`.
+
+| Song | Style | Length |
+| --- | --- | --- |
+| Rise of the Ember | Cinematic | 1:58 |
+| Monsoon Drive | Synthwave | 2:04 |
+| Chai & Chill | Lo-fi | 2:04 |
+| Neon Bazaar | House | 2:07 |
+| Starlit Ghats | Ambient | 2:04 |
+
 ## Add your own songs
 
 Only add songs you made yourself or have a licence to use, such as royalty-free or Creative Commons music (credit the artist if the licence asks for it).
@@ -36,7 +48,7 @@ Name files `Artist - Title.mp3` and Beatzyr fills in the artist and title for yo
 ```json
 {
   "songs": [
-    { "file": "my-first-song.mp3", "title": "My First Song", "artist": "Rahul" },
+    { "file": "my-first-song.mp3", "title": "My First Song", "artist": "Rahul", "genre": "Pop" },
     { "file": "night-walk.mp3", "title": "Night Walk", "artist": "Rahul" }
   ]
 }

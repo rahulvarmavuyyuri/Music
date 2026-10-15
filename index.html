@@ -403,7 +403,8 @@ const artistName=t=>t.artistName||(A[t.artist]?A[t.artist].name:'Unknown artist'
 const UPLOADS=[],REPO=[];
 const allTracks=()=>TRACKS.concat(REPO,UPLOADS);
 const upPl=()=>({id:'uploads',key:'uploads',name:'Uploaded songs',hue:160,ids:UPLOADS.map(t=>t.id)});
-const repoPl=()=>({id:'repo',key:'repo',name:'Songs folder',hue:340,ids:REPO.map(t=>t.id)});
+let REPO_TITLE='Songs folder',REPO_DESC='Audio files from the songs folder in your Beatzyr repository.';
+const repoPl=()=>({id:'repo',key:'repo',name:REPO_TITLE,hue:340,ids:REPO.map(t=>t.id)});
 const openKey=p=>p.key||(p.liked?'liked':'pl:'+p.id);
 
 const EDITORIAL=[
@@ -438,7 +439,7 @@ function ctxRaw(key){
   if(k==='search')return{ids:searchResults().map(t=>t.id),label:`Search: “${S.search}”`};
   if(k==='recent')return{ids:S.recent.slice(),label:'Recently played'};
   if(k==='uploads')return{ids:UPLOADS.map(t=>t.id),label:'Uploaded songs'};
-  if(k==='repo')return{ids:REPO.map(t=>t.id),label:'Songs folder'};
+  if(k==='repo')return{ids:REPO.map(t=>t.id),label:REPO_TITLE};
   if(k==='starter')return{ids:STARTER.slice(),label:'Start here'};
   if(k==='queue')return{ids:S.queue.slice(),label:S.ctxLabel};
   return{ids:[],label:''};
@@ -683,7 +684,7 @@ function trackRow(t,i,key,removable){
     <span class="num">${cur?eqHtml():i+1}</span>
     ${trackCover(t)}
     <div class="meta"><b>${esc(t.title)}</b><span>${esc(artistName(t))}</span></div>
-    <span class="tech">${isAudio(t)?(t.source==='repo'?'Songs folder':'Your file'):`${t.bpm} BPM · ${keyName(t)}`}</span>
+    <span class="tech">${isAudio(t)?(t.source==='repo'?esc(t.genre||REPO_TITLE):'Your file'):`${t.bpm} BPM · ${keyName(t)}`}</span>
     <span class="time">${t.dur?fmt(t.dur):'–:––'}</span>
     <button class="ibtn ${S.liked.has(t.id)?'liked':''}" data-like="${t.id}" aria-label="${S.liked.has(t.id)?'Unlike':'Like'}">${ico('heart')}</button>
     <button class="ibtn" data-add="${t.id}" aria-label="Add to playlist">${ico('plus')}</button>
@@ -698,6 +699,7 @@ function viewHome(){
   const rec=S.recent.filter(id=>T[id]),recent=rec.length?rec:STARTER;
   return `<h1 class="greet">${greet}</h1>
   <div class="quick">${quick.map(p=>`<button class="qtile" data-open="${openKey(p)}">${plCover(p,'',false)}<span>${esc(p.name)}</span></button>`).join('')}</div>
+  ${REPO.length?`<section class="sec"><div class="sec-head"><h2>${esc(REPO_TITLE)}</h2><small>Free to share</small></div><div class="list">${REPO.map((t,i)=>trackRow(t,i,'repo',false)).join('')}</div></section>`:''}
   <section class="sec"><div class="sec-head"><h2>Made for you</h2><small>Curated by Beatzyr</small></div>
     <div class="shelf">${EDITORIAL.map(p=>`<button class="card" data-open="pl:${p.id}">${plCover(p)}<b>${esc(p.name)}</b><small>${esc(p.desc)}</small></button>`).join('')}</div></section>
   <section class="sec"><div class="sec-head"><h2>${rec.length?'Recently played':'Start here'}</h2></div>
@@ -707,7 +709,7 @@ function viewHome(){
 }
 function searchResults(){
   const q=S.search.trim().toLowerCase();if(!q)return[];
-  return allTracks().filter(t=>[t.title,artistName(t),STYLES[t.style]?STYLES[t.style].label:'my songs',keyName(t),t.bpm?t.bpm+' bpm':''].some(s=>s.toLowerCase().includes(q)));
+  return allTracks().filter(t=>[t.title,artistName(t),STYLES[t.style]?STYLES[t.style].label:'my songs',t.genre||'',keyName(t),t.bpm?t.bpm+' bpm':''].some(s=>s.toLowerCase().includes(q)));
 }
 function viewSearch(){
   return `<h1>Search</h1>
@@ -732,7 +734,7 @@ function viewLibrary(){
   return `<div class="sec-head" style="flex-wrap:wrap"><h1>Your Library</h1><div class="actions" style="flex-wrap:wrap"><button class="pill" data-act="visuals">${ico('note')}Visuals ${BG.on?'on':'off'}</button><button class="pill" data-act="upload">${ico('upload')}Add songs</button><button class="pill primary" data-act="newpl">${ico('plus')}New playlist</button></div></div>
   <section class="sec"><h2>Your music</h2><div class="lib-grid">
     <button class="card" data-open="uploads">${plCover(upPl())}<b>Uploaded songs</b><small>${UPLOADS.length} on this device</small></button>
-    ${REPO.length?`<button class="card" data-open="repo">${plCover(repoPl())}<b>Songs folder</b><small>${REPO.length} from your repository</small></button>`:''}
+    ${REPO.length?`<button class="card" data-open="repo">${plCover(repoPl())}<b>${esc(REPO_TITLE)}</b><small>${REPO.length} songs · free to share</small></button>`:''}
     <button class="card newpl" data-act="upload"><div class="cover">${ico('upload')}</div><b>Add songs</b><small>MP3, M4A or WAV from your device</small></button>
   </div></section>
   <section class="sec"><h2>Playlists</h2><div class="lib-grid">
@@ -759,7 +761,7 @@ function viewDetail(key){
   else if(k==='pl'){const p=EDITORIAL.find(p=>p.id===id)||userPl(id);if(!p)return viewHome();user=!!userPl(id);
     eyebrow=user?'Your playlist':'Beatzyr playlist';title=p.name;desc=p.desc||'Add songs with the + button on any track.';cov=plCover(p)}
   else if(k==='uploads'){eyebrow='Your music';title='Uploaded songs';desc='Songs you added from this device. They stay in this browser and are not uploaded anywhere.';cov=plCover(upPl());removable=uploads=true}
-  else if(k==='repo'){eyebrow='Your music';title='Songs folder';desc='Audio files from the songs folder in your Beatzyr repository.';cov=plCover(repoPl())}
+  else if(k==='repo'){eyebrow=REPO.length?'Free to share':'Your music';title=REPO_TITLE;desc=REPO_DESC;cov=plCover(repoPl())}
   else if(k==='artist'){const a=A[id];eyebrow='Artist';title=a.name;desc=`${STYLES[a.style].label}. ${STYLES[a.style].blurb}.`;cov=artistCover(a)}
   else if(k==='genre'){const s=STYLES[id];eyebrow='Genre';title=s.label;desc=`${s.blurb}. Usually ${s.bpm[0]}–${s.bpm[1]} BPM.`;cov=`<div class="cover s-${id}" style="${coverStyle(s.hue,hash(id))}"><span class="cover-label">${s.label}</span></div>`}
   const total=ids.reduce((a,x)=>a+T[x].dur,0),active=S.ctxKey===key&&P.playing;
@@ -845,7 +847,7 @@ function renderSheet(){
       <button class="ibtn" data-act="next" aria-label="Next">${ico('next')}</button>
       <button class="ibtn rpt ${S.repeat!=='off'?'on':''}" data-act="repeat" aria-label="Repeat">${ico('repeat')}${S.repeat==='one'?'<b>1</b>':''}</button>
     </div>
-    <div class="specs">${isAudio(t)?`<div><span>Source</span><b>${t.source==='repo'?'Songs folder':'This device'}</b></div><div><span>Length</span><b>${t.dur?fmt(t.dur):'–'}</b></div><div><span>Type</span><b>Audio file</b></div>`:`<div><span>Tempo</span><b>${t.bpm} BPM</b></div><div><span>Key</span><b>${keyName(t)}</b></div><div><span>Genre</span><b>${STYLES[t.style].label}</b></div>`}</div>
+    <div class="specs">${isAudio(t)?`<div><span>Source</span><b>${t.source==='repo'?esc(REPO_TITLE):'This device'}</b></div><div><span>Length</span><b>${t.dur?fmt(t.dur):'–'}</b></div><div><span>${t.genre?'Genre':'Type'}</span><b>${esc(t.genre||'Audio file')}</b></div>`:`<div><span>Tempo</span><b>${t.bpm} BPM</b></div><div><span>Key</span><b>${keyName(t)}</b></div><div><span>Genre</span><b>${STYLES[t.style].label}</b></div>`}</div>
   </div>`;
   vizColor=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||vizColor;
   bindSeek($('#seek2'));
@@ -1034,8 +1036,9 @@ async function loadRepoSongs(){
   try{
     const res=await fetch('songs/songs.json',{cache:'no-store'});if(!res.ok)return;
     const j=await res.json();
+    if(j.title)REPO_TITLE=j.title;if(j.description)REPO_DESC=j.description;
     (j.songs||[]).forEach(x=>{if(!x||!x.file)return;const n=parseName(x.file);
-      REPO.push(makeAudioTrack({id:'r-'+x.file,title:x.title||n.title,artist:x.artist||n.artist,dur:x.duration||0,src:'songs/'+encodeURI(x.file),source:'repo'}))});
+      const t=makeAudioTrack({id:'r-'+x.file,title:x.title||n.title,artist:x.artist||n.artist,dur:x.duration||0,src:'songs/'+encodeURI(x.file),source:'repo'});if(x.genre)t.genre=x.genre;if(x.style&&STYLES[x.style])t.style=x.style;if(x.hue!=null)t.hue=x.hue;REPO.push(t)});
     if(!REPO.length)return;
     refresh();
     REPO.forEach(t=>{if(!t.dur)probeDuration(t.src).then(d=>{if(d>0){t.dur=d;refresh()}})});

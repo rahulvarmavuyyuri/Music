@@ -1,0 +1,15 @@
+Beatzyr Originals
+
+The audio files in this folder (rise-of-the-ember.mp3, monsoon-drive.mp3,
+chai-and-chill.mp3, neon-bazaar.mp3, starlit-ghats.mp3) were composed and
+synthesized from scratch for Beatzyr. They contain no samples or recordings
+from any other work.
+
+They are dedicated to the public domain under CC0 1.0 Universal:
+https://creativecommons.org/publicdomain/zero/1.0/
+
+You can copy, modify, share and use them for any purpose, including
+commercially, without asking permission or giving credit.
+
+If you add other songs to this folder, only add music you made yourself or
+have a licence to share.
