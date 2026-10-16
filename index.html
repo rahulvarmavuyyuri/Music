@@ -404,11 +404,11 @@ const UPLOADS=[],REPO=[];
 const allTracks=()=>TRACKS.concat(REPO,UPLOADS);
 const upPl=()=>({id:'uploads',key:'uploads',name:'Uploaded songs',hue:160,ids:UPLOADS.map(t=>t.id)});
 let REPO_TITLE='Songs folder',REPO_DESC='Audio files from the songs folder in your Beatz repository.';
-function repoGroups(){const m={};REPO.forEach(t=>{const g=t.genre||'';(m[g]=m[g]||[]).push(t.id)});
-  const big=Object.entries(m).filter(([g,ids])=>g&&ids.length>=2);
-  const rest=REPO.filter(t=>!big.some(([g])=>g===t.genre)).map(t=>t.id);return{big,rest}}
-const GENRE_HUE={Techno:265,'Vocal Techno':320};
-const groupPl=g=>({id:'rg'+g,key:'rg:'+g,name:g,hue:GENRE_HUE[g]!=null?GENRE_HUE[g]:hash(g)%360,ids:REPO.filter(t=>t.genre===g).map(t=>t.id)});
+function repoGroups(){const m={};REPO.forEach(t=>{const g=t.collection||t.genre||'';(m[g]=m[g]||[]).push(t.id)});
+  const big=Object.entries(m).filter(([g,ids])=>g&&ids.length>=2).reverse();
+  const rest=REPO.filter(t=>!big.some(([g])=>g===(t.collection||t.genre))).map(t=>t.id);return{big,rest}}
+const GENRE_HUE={Techno:265,'Vocal Techno':320,'Fresh Drops':40};
+const groupPl=g=>({id:'rg'+g,key:'rg:'+g,name:g,hue:GENRE_HUE[g]!=null?GENRE_HUE[g]:hash(g)%360,ids:REPO.filter(t=>(t.collection||t.genre)===g).map(t=>t.id)});
 const repoPl=()=>({id:'repo',key:'repo',name:REPO_TITLE,hue:340,ids:REPO.map(t=>t.id)});
 const openKey=p=>p.key||(p.liked?'liked':'pl:'+p.id);
 
@@ -445,7 +445,7 @@ function ctxRaw(key){
   if(k==='recent')return{ids:S.recent.slice(),label:'Recently played'};
   if(k==='uploads')return{ids:UPLOADS.map(t=>t.id),label:'Uploaded songs'};
   if(k==='repo')return{ids:REPO.map(t=>t.id),label:REPO_TITLE};
-  if(k==='rg')return{ids:REPO.filter(t=>t.genre===id).map(t=>t.id),label:id};
+  if(k==='rg')return{ids:REPO.filter(t=>(t.collection||t.genre)===id).map(t=>t.id),label:id};
   if(k==='reporest')return{ids:repoGroups().rest,label:REPO_TITLE};
   if(k==='starter')return{ids:STARTER.slice(),label:'Start here'};
   if(k==='queue')return{ids:S.queue.slice(),label:S.ctxLabel};
@@ -771,7 +771,7 @@ function viewDetail(key){
   else if(k==='pl'){const p=EDITORIAL.find(p=>p.id===id)||userPl(id);if(!p)return viewHome();user=!!userPl(id);
     eyebrow=user?'Your playlist':'Beatz playlist';title=p.name;desc=p.desc||'Add songs with the + button on any track.';cov=plCover(p)}
   else if(k==='uploads'){eyebrow='Your music';title='Uploaded songs';desc='Songs you added from this device. They stay in this browser and are not uploaded anywhere.';cov=plCover(upPl());removable=uploads=true}
-  else if(k==='rg'){eyebrow=REPO_TITLE;title=id;desc=`Original ${id.toLowerCase()} tracks made for Beatz. Free to play, share and reuse.`;cov=plCover(groupPl(id))}
+  else if(k==='rg'){eyebrow=REPO_TITLE;title=id;desc=`Original songs made for Beatz. Free to play, share and reuse.`;cov=plCover(groupPl(id))}
   else if(k==='repo'){eyebrow=REPO.length?'Free to share':'Your music';title=REPO_TITLE;desc=REPO_DESC;cov=plCover(repoPl())}
   else if(k==='artist'){const a=A[id];eyebrow='Artist';title=a.name;desc=`${STYLES[a.style].label}. ${STYLES[a.style].blurb}.`;cov=artistCover(a)}
   else if(k==='genre'){const s=STYLES[id];eyebrow='Genre';title=s.label;desc=`${s.blurb}. Usually ${s.bpm[0]}–${s.bpm[1]} BPM.`;cov=`<div class="cover s-${id}" style="${coverStyle(s.hue,hash(id))}"><span class="cover-label">${s.label}</span></div>`}
@@ -1049,7 +1049,7 @@ async function loadRepoSongs(){
     const j=await res.json();
     if(j.title)REPO_TITLE=j.title;if(j.description)REPO_DESC=j.description;
     (j.songs||[]).forEach(x=>{if(!x||!x.file)return;const n=parseName(x.file);
-      const t=makeAudioTrack({id:'r-'+x.file,title:x.title||n.title,artist:x.artist||n.artist,dur:x.duration||0,src:'songs/'+encodeURI(x.file),source:'repo'});if(x.genre)t.genre=x.genre;if(x.style&&STYLES[x.style])t.style=x.style;if(x.hue!=null)t.hue=x.hue;REPO.push(t)});
+      const t=makeAudioTrack({id:'r-'+x.file,title:x.title||n.title,artist:x.artist||n.artist,dur:x.duration||0,src:'songs/'+encodeURI(x.file),source:'repo'});if(x.genre)t.genre=x.genre;if(x.collection)t.collection=x.collection;if(x.style&&STYLES[x.style])t.style=x.style;if(x.hue!=null)t.hue=x.hue;REPO.push(t)});
     if(!REPO.length)return;
     refresh();
     REPO.forEach(t=>{if(!t.dur)probeDuration(t.src).then(d=>{if(d>0){t.dur=d;refresh()}})});

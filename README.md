@@ -20,7 +20,7 @@ Likes, playlists and uploaded songs are saved in your browser.
 
 ## Beatz Originals
 
-The `songs` folder ships with twelve original songs, including four techno and three vocal techno tracks, made for this app. They are public domain (CC0), so anyone can play, share or reuse them. See `songs/LICENSE.txt`.
+The `songs` folder ships with seventeen original songs (cinematic, lo-fi, house, techno, vocal techno, phonk, trap, drum & bass, trance and more) made for this app. They are public domain (CC0), so anyone can play, share or reuse them. See `songs/LICENSE.txt`.
 
 | Song | Style | Length |
 | --- | --- | --- |
@@ -36,6 +36,11 @@ The `songs` folder ships with twelve original songs, including four techno and t
 | Feel the Pulse | Vocal Techno | 2:05 |
 | Neon Hearts | Vocal Techno | 2:07 |
 | Machine Talk | Vocal Techno | 2:29 |
+| Drift King | Phonk | 1:52 |
+| Gully Nights | Desi Trap | 1:52 |
+| Velocity | Drum & Bass | 2:27 |
+| Skyward | Trance | 1:55 |
+| Dhol Fever | Dhol EDM | 2:08 |
 
 ## Add your own songs
 

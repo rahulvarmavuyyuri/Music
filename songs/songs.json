@@ -112,6 +112,56 @@
       "hue": 15,
       "duration": 149.5,
       "lyrics": "System online / Enter the machine / Lose control / Let the bass take over"
+    },
+    {
+      "file": "drift-king.mp3",
+      "title": "Drift King",
+      "artist": "Beatz Originals",
+      "genre": "Phonk",
+      "collection": "Fresh Drops",
+      "style": "synthwave",
+      "hue": 350,
+      "duration": 112.4
+    },
+    {
+      "file": "gully-nights.mp3",
+      "title": "Gully Nights",
+      "artist": "Beatz Originals",
+      "genre": "Desi Trap",
+      "collection": "Fresh Drops",
+      "style": "lofi",
+      "hue": 280,
+      "duration": 112.2
+    },
+    {
+      "file": "velocity.mp3",
+      "title": "Velocity",
+      "artist": "Beatz Originals",
+      "genre": "Drum & Bass",
+      "collection": "Fresh Drops",
+      "style": "chiptune",
+      "hue": 190,
+      "duration": 147.5
+    },
+    {
+      "file": "skyward.mp3",
+      "title": "Skyward",
+      "artist": "Beatz Originals",
+      "genre": "Trance",
+      "collection": "Fresh Drops",
+      "style": "ambient",
+      "hue": 205,
+      "duration": 115.3
+    },
+    {
+      "file": "dhol-fever.mp3",
+      "title": "Dhol Fever",
+      "artist": "Beatz Originals",
+      "genre": "Dhol EDM",
+      "collection": "Fresh Drops",
+      "style": "house",
+      "hue": 45,
+      "duration": 128.5
     }
   ]
 }
